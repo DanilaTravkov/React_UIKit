@@ -1,0 +1,47 @@
+import React, { useState } from 'react';
+import { selectStyles, optionStyles, selectHeaderStyles } from '../../utils/classStrings';
+import arrowDown from '../icons/ArrowDown.svg';
+
+interface SelectOption {
+    value: string | number;
+    label: string;
+}
+
+interface SelectProps {
+    placeholder: string;
+    selectOptions: SelectOption[];
+}
+
+export const CustomSelect: React.FC<SelectProps> = ({ placeholder, selectOptions }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+    const handleSelect = (value: string | number) => {
+        setSelectedOption(value.toString());
+        setIsOpen(false);
+    };
+
+    return (
+        <div className="relative m-2">
+            <div
+                className={`${selectHeaderStyles} ${isOpen ? "rounded-b-none" : ""}`}
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                {selectedOption ? selectedOption : <p className='flex justify-between'>{placeholder} <img className={`${isOpen ? "rotate-180 duration-300" : "duration-300"}`} src={arrowDown} alt="arrow down" /></p>}
+            </div>
+            {isOpen && (
+                <ul className={selectStyles}>
+                    {selectOptions.map((item, index) => (
+                        <li
+                            key={index}
+                            className={`${optionStyles} cursor-pointer ${isOpen ? "first:rounded-t-none" : ""}`}
+                            onClick={() => handleSelect(item.label)}
+                        >
+                            {item.label}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+};
