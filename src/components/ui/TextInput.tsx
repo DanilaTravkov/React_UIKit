@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import { primaryTextInputStyles } from '../../utils/classStrings'
 
-type TextInputType = "text" | "password" | "email" | "phone"
+type TextInputType = "text" | "password" | "email" | "number"
 
 interface TextInputProps {
   primary? : boolean
   secondary? : boolean
   disabled? : boolean
+  placeholder?: string
   type: TextInputType
   label: string
 }
 
-export const TextInput: React.FC<TextInputProps> = ({primary, secondary, disabled, type, label}) => {
+export const TextInput: React.FC<TextInputProps> = ({primary, secondary, disabled, type, label, placeholder}) => {
 
   const [error, setError] = useState<string | null>(null);
 
@@ -21,13 +22,15 @@ export const TextInput: React.FC<TextInputProps> = ({primary, secondary, disable
     switch(type) {
       case "email":
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {
+        if (value === "") {
+          setError("Cannot be empty")
+        } else if (!emailRegex.test(value)) {
           setError("Invalid email format");
         } else {
           setError(null);
         }
         break;
-      case "phone":
+      case "number":
         const phoneRegex = /^[0-9]{10,}$/;
         if (!phoneRegex.test(value)) {
           setError("Phone number should be at least 10 digits long");
@@ -67,6 +70,7 @@ export const TextInput: React.FC<TextInputProps> = ({primary, secondary, disable
         type={type}
         onBlur={handleBlur}
         disabled={disabled}
+        placeholder={placeholder}
       />
       {error && <span className="text-red-500 mt-1">{error}</span>}
     </div>

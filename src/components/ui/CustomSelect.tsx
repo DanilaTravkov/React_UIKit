@@ -27,7 +27,7 @@ export const CustomSelect: React.FC<SelectProps> = ({ placeholder, selectOptions
                 className={`${selectHeaderStyles} ${isOpen ? "rounded-b-none" : ""}`}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                {selectedOption ? selectedOption : <p className='flex justify-between'>{placeholder} <img className={`${isOpen ? "rotate-180 duration-300" : "duration-300"}`} src={arrowDown} alt="arrow down" /></p>}
+                {selectedOption ? <p className='flex justify-between'>{selectedOption} <img className={`${isOpen ? "rotate-180 duration-300" : "duration-300"}`} src={arrowDown} alt="arrow down" /></p> : <p className='flex justify-between'>{placeholder} <img className={`${isOpen ? "rotate-180 duration-300" : "duration-300 animate-pulse"}`} src={arrowDown} alt="arrow down" /></p>}
             </div>
             {isOpen && (
                 <ul className={selectStyles}>
