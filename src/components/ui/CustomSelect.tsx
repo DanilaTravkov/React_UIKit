@@ -3,13 +3,13 @@ import { selectStyles, optionStyles, selectHeaderStyles } from '../../utils/clas
 import arrowDown from '../icons/ArrowDown.svg';
 
 interface SelectOption {
-    value: string | number;
-    label: string;
+    value: string | number; // actual value of the select object
+    label: string; // shown label of the select object
 }
 
 interface SelectProps {
-    placeholder: string;
-    selectOptions: SelectOption[];
+    placeholder: string; // the first element of the select box
+    selectOptions: SelectOption[]; // options
 }
 
 export const CustomSelect: React.FC<SelectProps> = ({ placeholder, selectOptions }) => {
@@ -22,7 +22,7 @@ export const CustomSelect: React.FC<SelectProps> = ({ placeholder, selectOptions
     };
 
     return (
-        <div className="relative m-2">
+        <div className="relative m-4">
             <div
                 className={`${selectHeaderStyles} ${isOpen ? "rounded-b-none" : ""}`}
                 onClick={() => setIsOpen(!isOpen)}

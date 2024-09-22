@@ -2,9 +2,9 @@ import React from 'react';
 import { gridItemStyles } from '../../utils/classStrings';
 
 interface GridProps {
-    rows: number;
-    columns: number;
-    title?: string;
+    rows: number; // number of rows that will be created
+    columns: number; // number of colums that will be created
+    title?: string; // title above the grid, if you need one
 }
 
 export const CustomGrid: React.FC<GridProps> = ({ rows, columns, title }) => {
@@ -13,11 +13,11 @@ export const CustomGrid: React.FC<GridProps> = ({ rows, columns, title }) => {
     const gridTemplateColumns = `repeat(${columns}, 1fr)`;
 
     return (
-        <div className="flex flex-col h-screen m-2">
-            {title && <h2 className="text-xl font-bold mb-2">{title}</h2>}
+        <div className="flex flex-col h-screen m-4">
+            {title && <h2 className="text-3xl font-bold mb-2">{title}</h2>}
 
             <div
-                className="grid flex-grow rounded-2xl"  
+                className="grid flex-grow gap-2 rounded-2xl"  
                 style={{
                     gridTemplateRows,
                     gridTemplateColumns,
@@ -29,7 +29,7 @@ export const CustomGrid: React.FC<GridProps> = ({ rows, columns, title }) => {
                             key={index}
                             className={gridItemStyles}
                         >
-                            {`Item ${index + 1}`}
+                            <p className='cursor-default'>{`Item ${index + 1}`}</p>
                         </div>
                     ))
                 }

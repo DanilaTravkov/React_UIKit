@@ -1,17 +1,18 @@
 import React from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { ContentCardSkeleton } from './ContentCardSkeleton';
-import natureImage from "../../assets/nature-positive-thumbnail.jpg";
 import arrowDown from "../icons/ArrowDown.svg";
 import { contentCardContainerStyles } from '../../utils/classStrings';
 
 const BASE_URL = "https://jsonplaceholder.typicode.com";
 
 interface ContentCardProps {
-    title: string;
+    title: string // the title of the card
+    subheader?: string // the subheader if you need one
+    img?: string // background image url
 }
 
-export const ContentCard: React.FC<ContentCardProps> = ({ title }) => {
+export const ContentCard: React.FC<ContentCardProps> = ({ title, subheader, img }) => {
     const { isLoading, fetchError, posts } = useFetch(BASE_URL, { page: 1 });
 
     if (isLoading) {
@@ -19,24 +20,21 @@ export const ContentCard: React.FC<ContentCardProps> = ({ title }) => {
     }
 
     return (
-        <div className={`${contentCardContainerStyles} relative group`}>
-            {/* Image */}
+        <div className={`${contentCardContainerStyles} h-96 relative group`}>
             <img
-                className="rounded-xl w-full h-full object-cover filter brightness-75"
-                src={natureImage}
-                alt={title}
+                className="rounded-xl object-cover filter brightness-75 w-full h-full"
+                src={img}
             />
 
-            {/* Blurring Gradient at the bottom */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent bottom-0 h-full w-full pointer-events-none group-hover:backdrop-blur-md transition-all duration-300 ease-in-out" />
+            {/* Adjust the gradient for a smoother transition */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent bottom-0 h-full w-full pointer-events-none group-hover:backdrop-blur-md transition-all duration-300 ease-in-out" />
 
-            {/* Text and content */}
             <div className="absolute rounded-xl inset-0 w-full h-full text-start p-4 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
-                <h3 className="text-white text-xl font-bold">{title}</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab tenetur consequatur similique ullam eius id tempora cum, ad deserunt perspiciatis modi ipsum magni, voluptatibus odit cupiditate, iste vitae optio! Deserunt.</p>
+                <h1 className="text-white text-2xl font-bold">{title}</h1>
+                {subheader != undefined ? <h3 className="font-semibold">{subheader}</h3> : ""}
+                <p className="font-light">You can add your own text in here, make it small or large, tilt it and even change the font family, basically anything, the card will adjust itself</p>
             </div>
             
-            {/* Down arrow */}
             <img className='absolute bottom-0 right-1/2 py-4 bg-transparent animate-bounce' src={arrowDown} alt="" />
         </div>
     );

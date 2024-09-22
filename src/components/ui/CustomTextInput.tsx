@@ -4,15 +4,16 @@ import { primaryTextInputStyles } from '../../utils/classStrings'
 type TextInputType = "text" | "password" | "email" | "number"
 
 interface TextInputProps {
-  primary? : boolean
-  secondary? : boolean
-  disabled? : boolean
-  placeholder?: string
-  type: TextInputType
-  label: string
+  primary? : boolean // If the input needs to stand out
+  secondary? : boolean // If the input is regular
+  disabled? : boolean // To forbid the user to enter data (o)
+  placeholder?: string // The placeholder
+  isValidated?: boolean, //  If not passed, validation for this input will be disabled on the component level
+  type: TextInputType // The input type, all regular types + custom type 'email'
+  label: string // The field label
 }
 
-export const TextInput: React.FC<TextInputProps> = ({primary, secondary, disabled, type, label, placeholder}) => {
+export const CustomTextInput: React.FC<TextInputProps> = ({primary, secondary, isValidated, disabled, type, label, placeholder}) => {
 
   const [error, setError] = useState<string | null>(null);
 
@@ -62,13 +63,13 @@ export const TextInput: React.FC<TextInputProps> = ({primary, secondary, disable
   }
 
   return (
-    <div className="flex flex-col items-start m-2">
+    <div className="flex flex-col items-start m-4">
       <label htmlFor="input">{label}</label>
       <input
         name="input"
         className={primaryTextInputStyles}
         type={type}
-        onBlur={handleBlur}
+        onBlur={isValidated ? handleBlur : () => {}}
         disabled={disabled}
         placeholder={placeholder}
       />
