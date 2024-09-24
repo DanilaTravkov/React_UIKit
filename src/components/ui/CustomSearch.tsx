@@ -14,11 +14,11 @@ export const CustomSearch: React.FC = ({ }) => {
 
     const [searchString, setSearchString] = useState<string>("");
     const [matchedResults, setMatchedResults] = useState<ReturnDataItem[]>([]);
-    const [hideMatchedResults, setHideMatchedResults] = useState<boolean>(false);
+    const [hideMatchedResults, setHideMatchedResults] = useState<boolean>(true);
     const [inputFocused, setInputFocused] = useState<boolean>(false);
 
     const handleSearchStringChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setHideMatchedResults(true)
+        setHideMatchedResults(false)
         setSearchString(e.target.value);
         const matchedResults = testReturnData.filter(item => item.label.includes(e.target.value))
         setMatchedResults(matchedResults)
@@ -26,7 +26,7 @@ export const CustomSearch: React.FC = ({ }) => {
 
     const handleOnBlur = () => {
         if (searchString === "") {
-            setHideMatchedResults(false)
+            setHideMatchedResults(true)
         }
     }
 
@@ -57,7 +57,7 @@ export const CustomSearch: React.FC = ({ }) => {
             <img onClick={() => {inputRef.current?.focus(); setInputFocused(true);}} className={`absolute p-3 right-0 z-20 animate-pulse ${inputFocused && "animate-none"}}`} src={searchIcon} alt="search" />
             <p className='p-4 pl-0 pb-0 font-light'>{(searchString !== "" && matchedResults.length <= 0) && "No results"}</p>
             {
-              (searchString !== "" && matchedResults.length <= 0) || hideMatchedResults && <ul className={`px-2 border-2 rounded-lg border-slate-500 w-full overflow-y-auto`}>
+              (searchString !== "" && matchedResults.length <= 0) || !hideMatchedResults && <ul className={`px-2 border-2 rounded-lg border-slate-500 w-full overflow-y-auto`}>
                 {searchString != undefined && matchedResults.map((item, index) => {
                     return (
                         <li className='font-light p-2 py-3' key={index}>

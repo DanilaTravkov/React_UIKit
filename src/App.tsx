@@ -44,7 +44,6 @@ const DropDownMenuItems = [
 ]
 
 const handleCheckBoxChange = (updatedValues: CheckBoxValue[]) => {
-    // Update the parent component's state when checkboxes change
     setCheckboxData(updatedValues);
 };
 

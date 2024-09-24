@@ -34,7 +34,7 @@ export const CustomRadioButtonFactory: React.FC<RadioButtonFactorryProps> = ({ n
                         className="hidden peer"
                     />
                     <span
-                        onClick={() => handleRadioChange(option.value)}  // Allow the span to trigger selection
+                        onClick={() => handleRadioChange(option.value)}
                         className={`w-6 h-6 border-2 border-slate-500 rounded-full transition cursor-pointer
                         peer-checked:border-slate-200 peer-hover:bg-zinc-500/10 ${selectedValue === option.value ? "" : "animate-pulse"}`}
                     ></span>
