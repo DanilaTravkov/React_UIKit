@@ -25,7 +25,7 @@ export const CustomDropDownMenu: React.FC<DropDownMenuProps> = ({ items, header 
             onMouseLeave={handleMouseLeave}
         >
             <header className={`transition-all p-3 rounded-lg border-2 flex justify-between items-center border-slate-500 cursor-pointer text-start`}>
-                {header} <img className={`flex justify-center`} src={arrowDown} alt="arrow down" />
+                {header} <img className={`flex justify-center ${visible ? "rotate-180 duration-300" : "rotate-0 duration-300"}`} src={arrowDown} alt="arrow down" />
             </header>
             <ul
                 className={`transition-all rounded-lg py-3 mt-4 border-2 border-slate-500 duration-300 ease-in-out overflow-hidden ${
