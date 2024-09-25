@@ -47,7 +47,7 @@ export const CustomSearch: React.FC = ({ }) => {
             <input
                 ref={inputRef}
                 name="input"
-                className={`${primaryTextInputStyles} px-4`}
+                className={`${primaryTextInputStyles} px-5`}
                 type='text'
                 placeholder={"Search..."}
                 onChange={handleSearchStringChange}
@@ -57,10 +57,10 @@ export const CustomSearch: React.FC = ({ }) => {
             <img onClick={() => {inputRef.current?.focus(); setInputFocused(true);}} className={`absolute p-3 right-0 z-20 animate-pulse ${inputFocused && "animate-none"}}`} src={searchIcon} alt="search" />
             <p className='p-4 pl-0 pb-0 font-light'>{(searchString !== "" && matchedResults.length <= 0) && "No results"}</p>
             {
-              (searchString !== "" && matchedResults.length <= 0) || !hideMatchedResults && <ul className={`px-2 border-2 rounded-lg border-slate-500 w-full overflow-y-auto`}>
+              (searchString !== "" && matchedResults.length <= 0) || !hideMatchedResults && <ul className={`p-4 px-2 border-2 rounded-lg border-slate-500 w-full overflow-y-auto`}>
                 {searchString != undefined && matchedResults.map((item, index) => {
                     return (
-                        <li className='font-light p-2 py-3' key={index}>
+                        <li className='font-light p-3 hover:bg-zinc-500/10 rounded-full' key={index}>
                             {item.label}
                         </li>
                         )

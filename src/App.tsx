@@ -8,12 +8,15 @@ import otherUserImg from './assets/c1100b2ff0e4a9d76c536a2eca56a36a.jpg'
 import natureImage from "./assets/nature-positive-thumbnail.jpg";
 import { CheckBoxValue } from './components/ui/CustomCheckBoxFactory';
 import { CustomDropDownMenu } from './components/ui/CustomDropDownMenu';
+import { CustomModal } from './components/ui/CustomModal';
 
 const BASE_URL = "https://jsonplaceholder.typicode.com"
 
 function App()  {
 
   // const {isLoading, fetchError, posts} = useFetch(BASE_URL, { page: 1 })
+
+  const [invokedModal, setInvokedModal] = useState<boolean>(true);
 
   const selectOptions = [
     { value: "XS", label: "Extra small" },
@@ -53,8 +56,8 @@ const handleRadioChange = (value: string) => {
 
   return (
     <div>
-      <CustomButton primary>Primary button</CustomButton>
-      <CustomButton secondary>Secondary button</CustomButton>
+      <CustomButton onClick={() => alert("Primary button clicked")} primary>Primary button</CustomButton>
+      <CustomButton onClick={() => alert("Secondary button clicked")} secondary>Secondary button</CustomButton>
       <CustomTextInput isValidated type="text" placeholder='Example: username1' label="Enter username" />
       <CustomTextInput isValidated type="email" placeholder='Example: johndoe@gmail.com' label='Enter email' />
       <CustomTextInput isValidated type='password' placeholder='Up to 12 symbols' label='Enter password' />
@@ -68,6 +71,7 @@ const handleRadioChange = (value: string) => {
       <CustomUserButton userImg={otherUserImg}/>
       <CustomDropDownMenu header="Drop down menu" items={DropDownMenuItems} />
       <CustomGrid title='Grid title' rows={3} columns={3} />
+      <CustomModal setInvoked={setInvokedModal} invoked={invokedModal} />
     </div>
   )
 }

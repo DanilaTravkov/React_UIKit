@@ -1,37 +1,35 @@
+import { forwardRef } from "react";
 import { disabledButtonStyles, ghostButtonStyles, primaryButtonStyles, secondaryButtonStyles } from "../../utils/classStrings";
 
 interface ButtonProps {
-    primary?: boolean // Primary buttons stand out, primary classes will be applied
-    secondary?: boolean // Secondary classes will be applied
-    disabled?: boolean // Disabeld buttons are inactive
-    ghost?: boolean // Ghost buttons are a lot less visible
-    children: string // Text inside the button
+  primary?: boolean;
+  secondary?: boolean;
+  disabled?: boolean;
+  ghost?: boolean;
+  children: string;
+  onClick: () => void; // what happens when you click the button
 }
 
-export const CustomButton: React.FC<ButtonProps> = ({primary, secondary, disabled, ghost, children}) => {
-    
+export const CustomButton = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ primary, secondary, disabled, ghost, children, onClick }, ref) => {
     let buttonStyles = "";
 
     if (primary) {
-        buttonStyles = primaryButtonStyles;
+      buttonStyles = primaryButtonStyles;
     } else if (secondary) {
-        buttonStyles = secondaryButtonStyles;
+      buttonStyles = secondaryButtonStyles;
     } else if (ghost) {
-        buttonStyles = ghostButtonStyles;
+      buttonStyles = ghostButtonStyles;
     }
 
-    // Append disabled styles if the button is disabled, while keeping other styles intact
     if (disabled) {
-        buttonStyles += ` ${disabledButtonStyles}`;
+      buttonStyles += ` ${disabledButtonStyles}`;
     }
 
     return (
-        <button 
-            className={buttonStyles}
-            disabled={disabled ? true : false}
-        >
-            {children}
-        </button>
+      <button onClick={onClick} ref={ref} className={buttonStyles} disabled={disabled}>
+        {children}
+      </button>
     );
-};
-
+  }
+);
