@@ -39,7 +39,7 @@ export const CustomModal: React.FC<ModalProps> = ({ invoked, setInvoked }) => {
   return (
     <div
         className={`${
-        invoked ? 'opacity-100' : 'opacity-0'
+        invoked ? 'opacity-100' : 'opacity-0 invisible'
         } transition-all duration-300 flex items-center justify-center backdrop-blur-sm fixed inset-0 w-screen h-screen z-50`}
     >
       <div ref={modalRef} className='max-w-lg bg-slate-800 rounded-lg p-8'>
