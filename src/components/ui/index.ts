@@ -6,6 +6,7 @@ import { CustomUserButton } from "./CustomUserButton"
 import { CustomCheckBoxFactory } from "./CustomCheckBoxFactory"
 import { CustomRadioButtonFactory } from "./CustomRadioButtonFactory"
 import { CustomSearch } from "./CustomSearch"
+import { CustomToggleSwitch } from "./CustomToggleSwitch"
 
 export { 
     CustomButton, 
@@ -15,5 +16,6 @@ export {
     CustomUserButton,
     CustomCheckBoxFactory,
     CustomRadioButtonFactory,
-    CustomSearch
+    CustomSearch,
+    CustomToggleSwitch
 }

@@ -1,7 +1,7 @@
 import './App.css'
 import { useState } from 'react';
 // import { useFetch } from './hooks/useFetch';
-import { CustomButton, CustomTextInput, CustomSelect, CustomGrid, CustomUserButton, CustomCheckBoxFactory, CustomRadioButtonFactory, CustomSearch } from './components/ui';
+import { CustomButton, CustomTextInput, CustomSelect, CustomGrid, CustomUserButton, CustomCheckBoxFactory, CustomRadioButtonFactory, CustomSearch, CustomToggleSwitch } from './components/ui';
 import { ContentCard } from './components/ui/ContentCard';
 import userImg from './assets/dfbouue-a609b605-d553-4450-b56e-9cd707317231.jpg';
 import otherUserImg from './assets/c1100b2ff0e4a9d76c536a2eca56a36a.jpg'
@@ -17,6 +17,8 @@ function App()  {
   // const {isLoading, fetchError, posts} = useFetch(BASE_URL, { page: 1 })
 
   const [invokedModal, setInvokedModal] = useState<boolean>(true);
+
+  const [toggleSwitch, setToggleSwitch] = useState<boolean>(true);
 
   const selectOptions = [
     { value: "XS", label: "Extra small" },
@@ -58,6 +60,8 @@ const handleRadioChange = (value: string) => {
     <div>
       <CustomButton onClick={() => alert("Primary button clicked")} primary>Primary button</CustomButton>
       <CustomButton onClick={() => alert("Secondary button clicked")} secondary>Secondary button</CustomButton>
+      <CustomButton onClick={() => setInvokedModal(prev => !prev)} primary>Open modal</CustomButton>
+      <CustomToggleSwitch setIsSwitched={setToggleSwitch} isSwitched={toggleSwitch}/>
       <CustomTextInput isValidated type="text" placeholder='Example: username1' label="Enter username" />
       <CustomTextInput isValidated type="email" placeholder='Example: johndoe@gmail.com' label='Enter email' />
       <CustomTextInput isValidated type='password' placeholder='Up to 12 symbols' label='Enter password' />
