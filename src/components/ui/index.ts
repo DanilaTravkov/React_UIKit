@@ -7,6 +7,8 @@ import { CustomCheckBoxFactory } from "./CustomCheckBoxFactory"
 import { CustomRadioButtonFactory } from "./CustomRadioButtonFactory"
 import { CustomSearch } from "./CustomSearch"
 import { CustomToggleSwitch } from "./CustomToggleSwitch"
+import { ToastManager } from "./CustomToast"
+import { CustomDatePicker } from "./CustomDatePicker"
 
 export { 
     CustomButton, 
@@ -17,5 +19,7 @@ export {
     CustomCheckBoxFactory,
     CustomRadioButtonFactory,
     CustomSearch,
-    CustomToggleSwitch
+    CustomToggleSwitch,
+    ToastManager,
+    CustomDatePicker
 }

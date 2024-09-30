@@ -48,7 +48,7 @@ export const CustomModal: React.FC<ModalProps> = ({ invoked, setInvoked }) => {
     <div
       className={`${
         invoked ? 'opacity-100 visible' : 'opacity-0 invisible'
-      } transition-all duration-300 flex items-center justify-center backdrop-blur-sm fixed inset-0 w-screen h-screen z-50`}
+      } transition-all duration-300 flex items-center justify-center backdrop-blur-sm fixed inset-0 w-screen h-screen z-30`}
     >
       <div ref={modalRef} className='max-w-lg bg-slate-800/50 rounded-lg p-8'>
         <h1 className='text-2xl font-bold'>Content modal</h1>

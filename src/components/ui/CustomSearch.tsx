@@ -8,7 +8,7 @@ interface ReturnDataItem {
     img?: string
 }
 
-export const CustomSearch: React.FC = ({ }) => {
+export const CustomSearch: React.FC = ({}) => {
 
     const inputRef = useRef<HTMLInputElement>();
 

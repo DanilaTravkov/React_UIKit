@@ -15,8 +15,8 @@ export const CustomToggleSwitch: React.FC<ToggleSwitchProps> = ({isSwitched, set
     }
 
     return (
-        <div className='relative w-12 h-6 rounded-full m-4 border-2 border-slate-500' onClick={handleClick}>
-            <span className={`transition-transform absolute ${isSwitched ? "" : "translate-x-full"} w-1/2 h-full rounded-full bg-slate-500`}></span>
+        <div className={`transition-colors shadow-slate-500 relative w-12 h-6 rounded-full m-4 border-2 border-slate-500 ${isSwitched ? "bg-zinc-500/10" : "bg-green-900"}`} onClick={handleClick}>
+            <span className={`transition-transform absolute shadow-sm bg-white shadow-black ${isSwitched ? "" : "translate-x-full"} w-1/2 h-full rounded-full`}></span>
         </div>
     )
 }
