@@ -1,6 +1,6 @@
 const primaryButtonStyles = "border-2 border-slate-500 text-white font-normal py-3 px-4 rounded-2xl bg-transparent hover:bg-zinc-500/10 transition";
 const secondaryButtonStyles = "border-2 border-slate-500 text-white font-thin py-2 px-4 rounded-2xl bg-transparent hover:bg-zinc-500/10 transition";
-const disabledButtonStyles = "border-2 border-slate-500 bg-teal-800/60 text-white/60  hover:cursor-not-allowed hover:border-none";
+const disabledButtonStyles = "text-white/60 hover:cursor-not-allowed hover:bg-transparent";
 const ghostButtonStyles = "";
 
 const primaryTextInputStyles = "border-2 border-slate-500 p-2 mt-1 w-full text-white rounded-lg bg-transparent font-thin focus:border-teal-800";

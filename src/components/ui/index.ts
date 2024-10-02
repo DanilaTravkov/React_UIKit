@@ -9,6 +9,7 @@ import { CustomSearch } from "./CustomSearch"
 import { CustomToggleSwitch } from "./CustomToggleSwitch"
 import { ToastManager } from "./CustomToast"
 import { CustomDatePicker } from "./CustomDatePicker"
+import { CustomForm } from "./CustomForm"
 
 export { 
     CustomButton, 
@@ -21,5 +22,6 @@ export {
     CustomSearch,
     CustomToggleSwitch,
     ToastManager,
-    CustomDatePicker
+    CustomDatePicker,
+    CustomForm
 }

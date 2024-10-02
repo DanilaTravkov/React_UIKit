@@ -9,6 +9,7 @@ interface RadioButtonFactorryProps {
     name?: string // A name to group the radio buttons together
     options: RadioButtonOption[] // The list of radio button options
     onValueChange: (selectedValue: string) => void // Callback to parent with the selected value
+    required?: boolean;
 }
 
 export const CustomRadioButtonFactory: React.FC<RadioButtonFactorryProps> = ({ name, options, onValueChange }) => {

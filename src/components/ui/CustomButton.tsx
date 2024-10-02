@@ -6,13 +6,14 @@ interface ButtonProps {
   secondary?: boolean;
   disabled?: boolean;
   ghost?: boolean;
+  type: "button" | "submit" | "reset"
   children: string;
-  onClick: () => void;
+  onClick?: () => void;
   toastAction?: (toastRef: React.RefObject<any>) => void;
 }
 
 export const CustomButton = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ primary, secondary, disabled, ghost, children, onClick, toastAction }, ref) => {
+  ({ primary, secondary, disabled, ghost, children, type, onClick, toastAction }, ref) => {
     let buttonStyles = '';
 
     if (primary) {
@@ -35,7 +36,7 @@ export const CustomButton = forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     return (
-      <button onClick={handleClick} ref={ref} className={buttonStyles} disabled={disabled}>
+      <button type={type} onClick={handleClick} ref={ref} className={buttonStyles} disabled={disabled}>
         {children}
       </button>
     );

@@ -9,6 +9,7 @@ export interface CheckBoxValue {
 interface CheckBoxFactoryProps {
     values: CheckBoxValue[]; // checkbox objects
     onCheckBoxChange: (updatedValues: CheckBoxValue[]) => void;  // Callback to parent component, tracks checked boxes and sends them up the components tree
+    required?: boolean;
 }
 
 export const CustomCheckBoxFactory: React.FC<CheckBoxFactoryProps> = ({ values, onCheckBoxChange }) => {

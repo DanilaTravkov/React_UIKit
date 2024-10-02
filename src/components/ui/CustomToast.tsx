@@ -6,7 +6,6 @@ interface ToastManagerHandle {
 }
 
 interface ToastProps {
-  id: number
   message: string
   index: number
   onRemove: () => void

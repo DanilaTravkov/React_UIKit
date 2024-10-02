@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { selectStyles, optionStyles, selectHeaderStyles } from '../../utils/classStrings';
 import arrowDown from '../icons/ArrowDown.svg';
 
-interface SelectOption {
+export interface SelectOption {
     value: string | number; // actual value of the select object
     label: string; // shown label of the select object
 }
@@ -10,15 +10,18 @@ interface SelectOption {
 interface SelectProps {
     placeholder: string; // the first element of the select box
     selectOptions: SelectOption[]; // options
+    onSelectChange: (selectedValue: string | number) => void; // Callback to notify parent when a value is selected
+    required?: boolean;
 }
 
-export const CustomSelect: React.FC<SelectProps> = ({ placeholder, selectOptions }) => {
+export const CustomSelect: React.FC<SelectProps> = ({ placeholder, selectOptions, onSelectChange }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
     const handleSelect = (value: string | number) => {
         setSelectedOption(value.toString());
         setIsOpen(false);
+        onSelectChange(value); // Pass selected value to parent
     };
 
     return (
@@ -35,7 +38,7 @@ export const CustomSelect: React.FC<SelectProps> = ({ placeholder, selectOptions
                         <li
                             key={index}
                             className={`${optionStyles} cursor-pointer ${isOpen ? "first:rounded-t-none" : ""}`}
-                            onClick={() => handleSelect(item.label)}
+                            onClick={() => handleSelect(item.value)}
                         >
                             {item.label}
                         </li>
