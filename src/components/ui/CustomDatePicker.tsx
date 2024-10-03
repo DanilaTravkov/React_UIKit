@@ -3,11 +3,12 @@ import { primaryTextInputStyles } from '../../utils/classStrings';
 
 interface DatePickerProps {
     value: string
-    onDateChange: (value: string) => void; // Callback to notify parent when value of CustomDatePicker changes
-    required?: boolean;
+    onDateChange: (value: string) => void // Callback to notify parent when value of CustomDatePicker changes
+    required?: boolean
+    dataLabel?: string
 }
 
-export const CustomDatePicker: React.FC<DatePickerProps> = ({ value, onDateChange }) => {
+export const CustomDatePicker: React.FC<DatePickerProps> = ({ value, onDateChange, dataLabel }) => {
 
     const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onDateChange(e.target.value)

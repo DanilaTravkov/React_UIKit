@@ -13,6 +13,7 @@ interface TextInputProps {
   label: string; // The field label
   onInputChange: (value: string) => void; // Callback to pass the value to the parent
   required?: boolean; // Mark the field as required
+  dataLabel?: string
 }
 
 export const CustomTextInput: React.FC<TextInputProps> = ({
@@ -24,6 +25,7 @@ export const CustomTextInput: React.FC<TextInputProps> = ({
   label,
   placeholder,
   required,
+  dataLabel,
   onInputChange,
 }) => {
   const [value, setValue] = useState<string>(""); // Initialize the value state

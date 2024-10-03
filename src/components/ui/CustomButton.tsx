@@ -36,7 +36,7 @@ export const CustomButton = forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     return (
-      <button type={type} onClick={handleClick} ref={ref} className={buttonStyles} disabled={disabled}>
+      <button type={type} onClick={handleClick} ref={ref} className={`${buttonStyles} m-4 mt-2`} disabled={disabled}>
         {children}
       </button>
     );

@@ -25,7 +25,7 @@ import { CustomModal } from './components/ui/CustomModal';
 
 // const BASE_URL = "https://jsonplaceholder.typicode.com"
 
-type ToastHandle = {
+export type ToastHandle = {
   showToast: (message: string) => void;
 };
 
@@ -77,25 +77,27 @@ function App()  {
   return (
     <div>
       <ToastManager ref={toastRef} />
-      <CustomForm onSubmit={handleSubmit}>
-        <CustomDatePicker onDateChange={setSelectedDate} value={selectedDate} />
-        <CustomTextInput required isValidated onInputChange={setInputValue} type="text" placeholder='Example: username1' label="Enter username" />
-        <CustomTextInput required isValidated onInputChange={setInputValue} type="email" placeholder='Example: johndoe@gmail.com' label='Enter email' />
-        <CustomTextInput required isValidated onInputChange={setInputValue} type='password' placeholder='Up to 12 symbols' label='Enter password' />
+      <CustomModal setInvoked={setInvokedModal} invoked={invokedModal} />
+
+      <CustomForm toastRef={toastRef} onSubmit={handleSubmit}>
+        <CustomDatePicker onDateChange={setSelectedDate} value={selectedDate} dataLabel="dateOfBirth" />
+        <CustomTextInput required isValidated onInputChange={setInputValue} dataLabel="username" type="text" placeholder='Example: username1' label="Enter username" />
+        <CustomTextInput required isValidated onInputChange={setInputValue} dataLabel="email" type="email" placeholder='Example: johndoe@gmail.com' label='Enter email' />
+        <CustomTextInput required isValidated onInputChange={setInputValue} dataLabel="password" type='password' placeholder='Up to 12 symbols' label='Enter password' />
         <CustomSelect onSelectChange={setSelectValue} placeholder="Select size" selectOptions={selectOptions} />
         <CustomCheckBoxFactory onCheckBoxChange={setCheckboxData} values={checkboxData} />
         <CustomRadioButtonFactory onValueChange={setSelectedRadioValue} options={RadioOptions} />
-        <CustomButton toastAction={() => showToast("Form submitted")} type="submit" primary>
-          Submit
-        </CustomButton>
+        <CustomButton children={'Submit'} toastAction={() => showToast("Form submitted")} type="submit" primary />
       </CustomForm>
-      <p className='m-4'>{`Selected radio: ${selectedRadioValue}`}</p>
+
+      <CustomSearch />
+      <CustomToggleSwitch isSwitched={toggleSwitch} setIsSwitched={setToggleSwitch} />
+      
       <ContentCard title="Content card" subheader='Subheader' img={natureImage} />
       <CustomUserButton userImg={userImg} />
       <CustomUserButton userImg={otherUserImg} />
       <CustomDropDownMenu header="Drop down menu" items={DropDownMenuItems} />
       <CustomGrid title='Grid title' rows={3} columns={3} />
-      <CustomModal setInvoked={setInvokedModal} invoked={invokedModal} />
     </div>
   );
 }

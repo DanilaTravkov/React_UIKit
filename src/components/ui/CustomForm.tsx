@@ -5,6 +5,7 @@ import { CustomRadioButtonFactory } from './CustomRadioButtonFactory'
 import { CustomSelect } from './CustomSelect'
 import { CustomTextInput } from './CustomTextInput'
 import { CustomButton } from './CustomButton'
+import { ToastHandle } from '../../App'
 
 type CustomFormComponent =
   | typeof CustomCheckBoxFactory
@@ -23,9 +24,10 @@ type FormField = {
 interface CustomFormProps {
   children: ReactNode
   onSubmit: (values: Record<string, any>) => void
+  toastRef: React.RefObject<ToastHandle>
 }
 
-export const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit }) => {
+export const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit, toastRef }) => {
   const [formValues, setFormValues] = useState<Record<string, FormField>>({})
   const [isFormValid, setIsFormValid] = useState(false)
 
@@ -61,7 +63,7 @@ export const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit }) =>
             })
           case CustomDatePicker:
             return React.cloneElement(child, {
-              onDateChange: (value: any) => handleChildChange('date', value, childProps.required),
+              onDateChange: (value: any) => handleChildChange(child.props.dataLabel ? child.props.dataLabel : child.props.type, value, childProps.required),
             })
           case CustomRadioButtonFactory:
             return React.cloneElement(child, {
@@ -73,7 +75,7 @@ export const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit }) =>
             })
           case CustomTextInput:
             return React.cloneElement(child, {
-              onInputChange: (value: any) => handleChildChange(child.props.type, value, childProps.required),
+              onInputChange: (value: any) => handleChildChange(child.props.dataLabel ? child.props.dataLabel : child.props.type, value, childProps.required),
             })
           case CustomButton:
             if (child.props.type === 'submit') {
@@ -86,7 +88,14 @@ export const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit }) =>
                     onSubmit(finalValues)
                   }
                 },
-                disabled: !isFormValid, // Disable button if form is invalid
+                toastAction: () => {
+                  if (!isFormValid) {
+                    toastRef.current?.showToast("Some required fields are emtpy!")
+                  } else {
+                    toastRef.current?.showToast("Form submitted!")
+                  }
+                },
+                // disabled: !isFormValid, // Disable button if form is invalid
               })
             }
             return child
