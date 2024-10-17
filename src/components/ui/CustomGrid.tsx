@@ -1,5 +1,5 @@
 import React from 'react';
-import { gridItemStyles } from '../../utils/classStrings';
+import { _gridItemStyles } from '../../utils/classStrings';
 
 interface GridProps {
     rows: number; // number of rows that will be created
@@ -27,7 +27,7 @@ export const CustomGrid: React.FC<GridProps> = ({ rows, columns, title }) => {
                     Array.from({ length: rows * columns }).map((_, index) => (
                         <div
                             key={index}
-                            className={gridItemStyles}
+                            className={_gridItemStyles}
                         >
                             <p className='cursor-default'>{`Item ${index + 1}`}</p>
                         </div>

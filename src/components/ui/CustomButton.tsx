@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { disabledButtonStyles, ghostButtonStyles, primaryButtonStyles, secondaryButtonStyles } from '../../utils/classStrings';
+import { _disabledButtonStyles, _ghostButtonStyles, _primaryButtonStyles, _secondaryButtonStyles } from '../../utils/classStrings';
 
 interface ButtonProps {
   primary?: boolean;
@@ -17,15 +17,15 @@ export const CustomButton = forwardRef<HTMLButtonElement, ButtonProps>(
     let buttonStyles = '';
 
     if (primary) {
-      buttonStyles = primaryButtonStyles;
+      buttonStyles = _primaryButtonStyles;
     } else if (secondary) {
-      buttonStyles = secondaryButtonStyles;
+      buttonStyles = _secondaryButtonStyles;
     } else if (ghost) {
-      buttonStyles = ghostButtonStyles;
+      buttonStyles = _ghostButtonStyles;
     }
 
     if (disabled) {
-      buttonStyles += ` ${disabledButtonStyles}`;
+      buttonStyles += ` ${_disabledButtonStyles}`;
     }
 
     const handleClick = () => {

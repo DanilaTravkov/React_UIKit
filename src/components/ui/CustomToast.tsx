@@ -1,5 +1,6 @@
 // ToastManager.tsx
 import React, { useState, useImperativeHandle, forwardRef, useRef, useEffect } from 'react';
+import { _toastContainerStylesCentered, _toastContainerStylesDefault, _toastStyles } from '../../utils/classStrings';
 
 interface ToastManagerHandle {
   showToast: (message: string) => void
@@ -80,7 +81,7 @@ const Toast: React.FC<ToastProps> = ({
 
   return (
     <div
-      className={`fixed z-40 p-4 w-1/4 bg-gray-800 text-white rounded-lg shadow-lg transition-all duration-300 ease-in-out ${
+      className={`${_toastStyles} ${
         visible ? 'opacity-100' : 'opacity-0'
       }`}
       style={positionStyle}
@@ -134,8 +135,8 @@ export const ToastManager = forwardRef<ToastManagerHandle, ToastManagerProps>(({
   // };
 
   const containerClassName = alignCenter
-    ? 'fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md'
-    : 'fixed bottom-4 right-4 z-50 w-full max-w-md'
+    ? `${_toastContainerStylesCentered}`
+    : `${_toastContainerStylesDefault}`
 
   return (
     <div className={containerClassName}>

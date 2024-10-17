@@ -57,10 +57,10 @@ export const CustomModal: React.FC<ModalProps> = ({ invoked, setInvoked }) => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam tempore saepe magnam dolorum quasi, quis doloremque sed obcaecati, non ut adipisci minus ipsum esse quia ab?
         </p>
         <div className='flex justify-between py-2'>
-          <CustomButton onClick={handleCloseModal} secondary>
+          <CustomButton type={"button"} onClick={handleCloseModal} secondary>
             Reject
           </CustomButton>
-          <CustomButton onClick={handleCloseModal} ref={acceptButtonRef} primary>
+          <CustomButton type={"button"} onClick={handleCloseModal} ref={acceptButtonRef} primary>
             Accept
           </CustomButton>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { checkBoxStyles } from '../../utils/classStrings';
+import { _checkBoxStyles } from '../../utils/classStrings';
 
 export interface CheckBoxValue {
     label: string; // The checkbox label
@@ -12,7 +12,7 @@ interface CheckBoxFactoryProps {
     required?: boolean;
 }
 
-export const CustomCheckBoxFactory: React.FC<CheckBoxFactoryProps> = ({ values, onCheckBoxChange }) => {
+export const CustomCheckBoxFactory: React.FC<CheckBoxFactoryProps> = ({ values, onCheckBoxChange, required }) => {
     const [checkBoxValues, setCheckBoxValues] = useState<CheckBoxValue[]>(values);
 
     const handleCheckboxChange = (index: number) => {
@@ -40,7 +40,7 @@ export const CustomCheckBoxFactory: React.FC<CheckBoxFactoryProps> = ({ values, 
                     />
                     <span
                         onClick={() => handleCheckboxChange(index)} 
-                        className={`${checkBoxStyles} ${item.isChecked ? "" : "animate-pulse"}`}
+                        className={`${_checkBoxStyles} ${item.isChecked ? "" : "animate-pulse"}`}
                     ></span>
                     <label
                         htmlFor={`checkbox-${index}`}

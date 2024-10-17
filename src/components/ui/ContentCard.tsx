@@ -2,7 +2,7 @@ import React from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { ContentCardSkeleton } from './ContentCardSkeleton';
 import arrowDown from "../icons/ArrowDown.svg";
-import { contentCardContainerStyles } from '../../utils/classStrings';
+import { _contentCardContainerStyles } from '../../utils/classStrings';
 
 const BASE_URL = "https://jsonplaceholder.typicode.com";
 
@@ -10,6 +10,8 @@ interface ContentCardProps {
     title: string // the title of the card
     subheader?: string // the subheader if you need one
     img?: string // background image url
+
+
 }
 
 export const ContentCard: React.FC<ContentCardProps> = ({ title, subheader, img }) => {
@@ -20,7 +22,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({ title, subheader, img 
     }
 
     return (
-        <div className={`${contentCardContainerStyles} h-96 relative group`}>
+        <div className={`${_contentCardContainerStyles} h-96 relative group`}>
             <img
                 className="rounded-xl object-cover filter brightness-75 w-full h-full"
                 src={img}

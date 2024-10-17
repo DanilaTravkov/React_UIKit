@@ -12,7 +12,7 @@ interface RadioButtonFactorryProps {
     required?: boolean;
 }
 
-export const CustomRadioButtonFactory: React.FC<RadioButtonFactorryProps> = ({ name, options, onValueChange }) => {
+export const CustomRadioButtonFactory: React.FC<RadioButtonFactorryProps> = ({ name, options, onValueChange, required }) => {
 
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
     

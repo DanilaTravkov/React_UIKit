@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { primaryTextInputStyles } from '../../utils/classStrings'
+import { _primaryTextInputStyles } from '../../utils/classStrings'
 import searchIcon from "../icons/search_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.svg"
 
 interface ReturnDataItem {
@@ -31,6 +31,7 @@ export const CustomSearch: React.FC = ({}) => {
     }
 
 
+    // TODO: data should be fetched from API
     const testReturnData: ReturnDataItem[]  = [
         { label: "apple", link: "", img: "" },
         { label: "carrot", link: "", img: "" },
@@ -47,7 +48,7 @@ export const CustomSearch: React.FC = ({}) => {
             <input
                 ref={inputRef}
                 name="input"
-                className={`${primaryTextInputStyles} `}
+                className={`${_primaryTextInputStyles} `}
                 type='text'
                 placeholder={"Search..."}
                 onChange={handleSearchStringChange}

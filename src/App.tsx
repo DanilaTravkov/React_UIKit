@@ -74,17 +74,28 @@ function App()  {
     console.log("Form submitted with values: ", formValues);
   };
 
+  // const formSchema = {
+  //   dateOfBirth: { required: true, isValid: true },
+  //   username: { required: true, isValid: true },
+  //   email: { required: true, isValid: true },
+  //   password: { required: true, isValid: true },
+  //   size: { required: true, isValid: true },
+  // };
+
+  // const keysArr = Array.from(Object.keys(formSchema));
+
   return (
     <div>
       <ToastManager ref={toastRef} />
       <CustomModal setInvoked={setInvokedModal} invoked={invokedModal} />
+      <CustomButton children={"Click me"} onClick={() => setInvokedModal(true)} toastAction={() => showToast("Modal opened")} type="button" primary={true} />
 
       <CustomForm toastRef={toastRef} onSubmit={handleSubmit}>
-        <CustomDatePicker onDateChange={setSelectedDate} value={selectedDate} dataLabel="dateOfBirth" />
+        <CustomDatePicker required onDateChange={setSelectedDate} value={selectedDate} />
         <CustomTextInput required isValidated onInputChange={setInputValue} dataLabel="username" type="text" placeholder='Example: username1' label="Enter username" />
         <CustomTextInput required isValidated onInputChange={setInputValue} dataLabel="email" type="email" placeholder='Example: johndoe@gmail.com' label='Enter email' />
         <CustomTextInput required isValidated onInputChange={setInputValue} dataLabel="password" type='password' placeholder='Up to 12 symbols' label='Enter password' />
-        <CustomSelect onSelectChange={setSelectValue} placeholder="Select size" selectOptions={selectOptions} />
+        <CustomSelect required onSelectChange={setSelectValue} placeholder="Select size" selectOptions={selectOptions} />
         <CustomCheckBoxFactory onCheckBoxChange={setCheckboxData} values={checkboxData} />
         <CustomRadioButtonFactory onValueChange={setSelectedRadioValue} options={RadioOptions} />
         <CustomButton children={'Submit'} toastAction={() => showToast("Form submitted")} type="submit" primary />

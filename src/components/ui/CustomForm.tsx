@@ -1,4 +1,4 @@
-import React, { useState, ReactNode, useEffect } from 'react'
+import React, { useState, ReactNode, useEffect, useRef } from 'react'
 import { CustomCheckBoxFactory } from './CustomCheckBoxFactory'
 import { CustomDatePicker } from './CustomDatePicker'
 import { CustomRadioButtonFactory } from './CustomRadioButtonFactory'
@@ -24,12 +24,22 @@ type FormField = {
 interface CustomFormProps {
   children: ReactNode
   onSubmit: (values: Record<string, any>) => void
-  toastRef: React.RefObject<ToastHandle>
+  toastRef: React.RefObject<ToastHandle>,
 }
 
 export const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit, toastRef }) => {
-  const [formValues, setFormValues] = useState<Record<string, FormField>>({})
+  const [formValues, setFormValues] = useState<Record<string, FormField>>({
+    date: { value: '', required: true, isValid: false },
+    username: { value: '', required: true, isValid: false },
+    email: { value: '', required: true, isValid: false },
+    password: { value: '', required: true, isValid: false },
+    select: { value: '', required: true, isValid: false },
+    checkbox: { value: [], required: true, isValid: false },
+    radio: { value: '', required: true, isValid: false },
+  });
   const [isFormValid, setIsFormValid] = useState(false)
+
+  const inputRefs = useRef<Record<string, any>>({})
 
   // Handle child value change and update form state
   const handleChildChange = (key: string, value: any, required: boolean = false) => {
@@ -49,62 +59,82 @@ export const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit, toas
     setIsFormValid(allFieldsValid)
   }, [formValues])
 
+  const handleSubmit  = () => {
+    Object.keys(inputRefs.current).forEach((key) => {
+      if (formValues[key] && formValues[key].required && !formValues[key].isValid) {
+        inputRefs.current[key]?.triggerValidation();
+      } else {
+        console.error(`Form value for key ${key} is undefined`);
+      }
+    });
+    
+
+    if (isFormValid) {
+      const finalValues = Object.fromEntries(
+        Object.entries(formValues).map(([key, data]) => [key, data.value])
+      );
+      onSubmit(finalValues);
+    }
+  }
+
+  useEffect(() => {
+    console.log("inputRefs:", inputRefs.current);
+  }, [inputRefs.current]);
+
   // Render children and inject props to handle state and validation
   const renderChildren = () =>
     React.Children.map(children, (child) => {
       if (React.isValidElement(child)) {
-        const childType = child.type as CustomFormComponent
-        const childProps: any = child.props
-
+        const childType = child.type as CustomFormComponent;
+        const childProps: any = child.props;
+  
         switch (childType) {
           case CustomCheckBoxFactory:
             return React.cloneElement(child, {
               onCheckBoxChange: (values: any) => handleChildChange('checkbox', values, childProps.required),
-            })
+              ref: (el: any) => (inputRefs.current[childProps.dataLabel || "checkbox"] = el)
+            });
           case CustomDatePicker:
             return React.cloneElement(child, {
-              onDateChange: (value: any) => handleChildChange(child.props.dataLabel ? child.props.dataLabel : child.props.type, value, childProps.required),
-            })
+              onDateChange: (value: any) => handleChildChange(childProps.dataLabel || "date", value, childProps.required),
+              ref: (el: any) => (inputRefs.current[childProps.dataLabel || "date"] = el)
+            });
           case CustomRadioButtonFactory:
             return React.cloneElement(child, {
               onValueChange: (value: any) => handleChildChange('radio', value, childProps.required),
-            })
+              ref: (el: any) => (inputRefs.current[childProps.dataLabel || "radio"] = el)
+            });
           case CustomSelect:
             return React.cloneElement(child, {
-              onSelectChange: (value: any) => handleChildChange('select', value, childProps.required),
-            })
+              onSelectChange: (value: any) => handleChildChange(childProps.dataLabel || 'select', value, childProps.required),
+              ref: (el: any) => (inputRefs.current[childProps.dataLabel || "select"] = el)
+            });
           case CustomTextInput:
             return React.cloneElement(child, {
-              onInputChange: (value: any) => handleChildChange(child.props.dataLabel ? child.props.dataLabel : child.props.type, value, childProps.required),
-            })
+              onInputChange: (value: any) => handleChildChange(childProps.dataLabel || childProps.type, value, childProps.required),
+              ref: (el: any) => (inputRefs.current[childProps.dataLabel || childProps.type] = el)
+            });
           case CustomButton:
-            if (child.props.type === 'submit') {
+            if (childProps.type === 'submit') {
               return React.cloneElement(child, {
-                onClick: () => {
-                  if (isFormValid) {
-                    const finalValues = Object.fromEntries(
-                      Object.entries(formValues).map(([key, data]) => [key, data.value])
-                    )
-                    onSubmit(finalValues)
-                  }
-                },
+                onClick: () => handleSubmit(),
                 toastAction: () => {
                   if (!isFormValid) {
-                    toastRef.current?.showToast("Some required fields are emtpy!")
+                    toastRef.current?.showToast("Some required fields are empty!");
                   } else {
-                    toastRef.current?.showToast("Form submitted!")
+                    toastRef.current?.showToast("Form submitted!");
                   }
                 },
-                // disabled: !isFormValid, // Disable button if form is invalid
-              })
+              });
             }
-            return child
+            return child;
           default:
-            return child
+            return child;
         }
       }
-      return child
-    })
+      return child;
+    });
+  
 
   return <div>{renderChildren()}</div>
 }

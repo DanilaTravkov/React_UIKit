@@ -1,22 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { primaryTextInputStyles } from '../../utils/classStrings';
+import React, { useState, useEffect, forwardRef, useRef, useImperativeHandle } from 'react';
+import { _primaryTextInputStyles } from '../../utils/classStrings';
+import { CustomInputType, TextInputProps } from '../types/formInputTypes';
 
-type TextInputType = "text" | "password" | "email" | "number";
-
-interface TextInputProps {
-  primary?: boolean; // If the input needs to stand out
-  secondary?: boolean; // If the input is regular
-  disabled?: boolean; // To forbid the user to enter data
-  placeholder?: string; // The placeholder
-  isValidated?: boolean; // If not passed, validation for this input will be disabled
-  type: TextInputType; // The input type, all regular types + custom type 'email'
-  label: string; // The field label
-  onInputChange: (value: string) => void; // Callback to pass the value to the parent
-  required?: boolean; // Mark the field as required
-  dataLabel?: string
-}
-
-export const CustomTextInput: React.FC<TextInputProps> = ({
+export const CustomTextInput = forwardRef<CustomInputType, TextInputProps>(({
   primary,
   secondary,
   isValidated,
@@ -25,23 +11,22 @@ export const CustomTextInput: React.FC<TextInputProps> = ({
   label,
   placeholder,
   required,
-  dataLabel,
   onInputChange,
-}) => {
-  const [value, setValue] = useState<string>(""); // Initialize the value state
-  const [error, setError] = useState<string | null>(null);
+}, ref) => {
+  const [value, setValue] = useState<string>(""); // State for input value
+  const [error, setError] = useState<string | null>(null); // Local error state
 
+  // Notify parent of the current input value initially
   useEffect(() => {
-    // Notify parent about initial value state (empty by default)
     onInputChange(value);
-  }, []);
+  }, []); // Run only on component mount
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setValue(newValue);
     onInputChange(newValue);
 
-    // If the field is required, show an error when it's empty
+    // If the field is required, set local error if empty
     if (required && newValue === "") {
       setError("This field is required");
     } else {
@@ -49,10 +34,18 @@ export const CustomTextInput: React.FC<TextInputProps> = ({
     }
   };
 
+  useImperativeHandle(ref, () => ({
+    triggerValidation: () => {
+      if (required && value === '') {
+        setError('This field is required');
+      }
+    },
+  }));
+
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
 
-    // Additional validations based on type
+    // Additional validations based on input type
     switch (type) {
       case "email":
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -75,14 +68,6 @@ export const CustomTextInput: React.FC<TextInputProps> = ({
         }
         break;
       case "text":
-        if (required && newValue === "") {
-          setError("This field is required");
-        } else if (newValue.length > 12) {
-          setError("Maximum length is 12 characters");
-        } else {
-          setError(null);
-        }
-        break;
       case "password":
         if (required && newValue === "") {
           setError("This field is required");
@@ -107,15 +92,17 @@ export const CustomTextInput: React.FC<TextInputProps> = ({
       <label htmlFor="input">{label}</label>
       <input
         name="input"
-        className={primaryTextInputStyles}
+        className={_primaryTextInputStyles}
         type={type}
-        onBlur={isValidated ? handleBlur : () => {}}
+        onBlur={isValidated ? handleBlur : () => {}} // Only validate onBlur if validation is required
         disabled={disabled}
         placeholder={placeholder}
         value={value}
         onChange={handleChange} // Update value state on change
       />
-      {error && <span className="text-red-500 mt-1">{error}</span>}
+      {
+        error && <span className="text-red-500 mt-1">{error}</span>
+      }
     </div>
-  );
-};
+  )
+})

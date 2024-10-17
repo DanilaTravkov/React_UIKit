@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { _toggleSwitchContainerStyles, _toggleSwitchElementStyles } from '../../utils/classStrings'
 
 interface ToggleSwitchProps {
     isSwitched?: boolean
     setIsSwitched?: (state: React.ComponentState) => void
 }
 
-export const CustomToggleSwitch: React.FC<ToggleSwitchProps> = ({isSwitched, setIsSwitched}) => {
+export const CustomToggleSwitch: React.FC<ToggleSwitchProps> = ({ isSwitched, setIsSwitched}) => {
 
     const handleClick = () => {
         if (setIsSwitched) {
@@ -15,8 +16,8 @@ export const CustomToggleSwitch: React.FC<ToggleSwitchProps> = ({isSwitched, set
     }
 
     return (
-        <div className={`transition-colors shadow-slate-500 relative w-12 h-6 rounded-full m-4 border-2 border-slate-500 ${isSwitched ? "bg-zinc-500/10" : "bg-green-900"}`} onClick={handleClick}>
-            <span className={`transition-transform absolute shadow-sm bg-white shadow-black ${isSwitched ? "" : "translate-x-full"} w-1/2 h-full rounded-full`}></span>
+        <div className={`${_toggleSwitchContainerStyles} ${isSwitched ? "bg-zinc-500/10" : "bg-green-900"}`} onClick={handleClick}>
+            <span className={`${_toggleSwitchElementStyles} ${isSwitched ? "" : "translate-x-full"}`}></span>
         </div>
     )
 }
