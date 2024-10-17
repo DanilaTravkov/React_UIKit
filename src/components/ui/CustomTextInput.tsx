@@ -22,15 +22,15 @@ export const CustomTextInput = forwardRef<CustomInputType, TextInputProps>(({
   }, []); // Run only on component mount
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
-    setValue(newValue);
-    onInputChange(newValue);
+    const newValue = event.target.value
+    setValue(newValue)
+    onInputChange(newValue)
 
     // If the field is required, set local error if empty
     if (required && newValue === "") {
-      setError("This field is required");
+      setError("This field is required")
     } else {
-      setError(null);
+      setError(null)
     }
   };
 

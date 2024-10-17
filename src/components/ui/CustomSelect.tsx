@@ -1,27 +1,7 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import { useState, forwardRef, useImperativeHandle } from 'react';
 import { _selectStyles, _optionStyles, _selectHeaderStyles } from '../../utils/classStrings';
-import { CustomInputType } from '../types/formInputTypes';
+import { CustomInputType, SelectProps } from '../types/formInputTypes';
 import arrowDown from '../icons/ArrowDown.svg';
-
-export interface SelectOption {
-    value: string | number; // actual value of the select object
-    label: string; // shown label of the select object
-}
-
-interface SelectProps {
-    placeholder: string; // the first element of the select box
-    selectOptions: SelectOption[]; // options
-    onSelectChange: (selectedValue: string | number) => void; // Callback to notify parent when a value is selected
-    /**
-     * Mark the field as required.
-     * Once the field is marked as required, it cannot be left empty before form submit.
-     * It will display an error message if empty
-     *
-     * @see {@link https://react.dev/learn/referencing-values-with-refs#refs-and-the-dom React Docs}
-     */
-    required?: boolean;
-    dataLabel?: string; // Label for data identification
-}
 
 export const CustomSelect = forwardRef<CustomInputType, SelectProps>(({ placeholder, selectOptions, onSelectChange, required, dataLabel }, ref) => {
     const [isOpen, setIsOpen] = useState(false);

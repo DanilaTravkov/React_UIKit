@@ -1,11 +1,11 @@
-import React, { useState, ReactNode, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { CustomCheckBoxFactory } from './CustomCheckBoxFactory'
 import { CustomDatePicker } from './CustomDatePicker'
 import { CustomRadioButtonFactory } from './CustomRadioButtonFactory'
 import { CustomSelect } from './CustomSelect'
 import { CustomTextInput } from './CustomTextInput'
 import { CustomButton } from './CustomButton'
-import { ToastHandle } from '../../App'
+import { CustomFormProps } from '../types/formInputTypes'
 
 type CustomFormComponent =
   | typeof CustomCheckBoxFactory
@@ -21,21 +21,15 @@ type FormField = {
   isValid: boolean
 }
 
-interface CustomFormProps {
-  children: ReactNode
-  onSubmit: (values: Record<string, any>) => void
-  toastRef: React.RefObject<ToastHandle>,
-}
-
 export const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit, toastRef }) => {
   const [formValues, setFormValues] = useState<Record<string, FormField>>({
-    date: { value: '', required: true, isValid: false },
-    username: { value: '', required: true, isValid: false },
-    email: { value: '', required: true, isValid: false },
-    password: { value: '', required: true, isValid: false },
-    select: { value: '', required: true, isValid: false },
-    checkbox: { value: [], required: true, isValid: false },
-    radio: { value: '', required: true, isValid: false },
+    // date: { value: '', required: false, isValid: true },
+    // username: { value: '', required: false, isValid: true },
+    // email: { value: '', required: false, isValid: true },
+    // password: { value: '', required: false, isValid: true },
+    // select: { value: '', required: false, isValid: true },
+    // checkbox: { value: '', required: false, isValid: true },
+    // radio: { value: '', required: false, isValid: true },
   });
   const [isFormValid, setIsFormValid] = useState(false)
 
@@ -60,11 +54,10 @@ export const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit, toas
   }, [formValues])
 
   const handleSubmit  = () => {
+    console.log(inputRefs.current)
     Object.keys(inputRefs.current).forEach((key) => {
       if (formValues[key] && formValues[key].required && !formValues[key].isValid) {
         inputRefs.current[key]?.triggerValidation();
-      } else {
-        console.error(`Form value for key ${key} is undefined`);
       }
     });
     
@@ -92,7 +85,7 @@ export const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit, toas
           case CustomCheckBoxFactory:
             return React.cloneElement(child, {
               onCheckBoxChange: (values: any) => handleChildChange('checkbox', values, childProps.required),
-              ref: (el: any) => (inputRefs.current[childProps.dataLabel || "checkbox"] = el)
+              // ref: (el: any) => (inputRefs.current[childProps.dataLabel || "checkbox"] = el)
             });
           case CustomDatePicker:
             return React.cloneElement(child, {
@@ -102,7 +95,7 @@ export const CustomForm: React.FC<CustomFormProps> = ({ children, onSubmit, toas
           case CustomRadioButtonFactory:
             return React.cloneElement(child, {
               onValueChange: (value: any) => handleChildChange('radio', value, childProps.required),
-              ref: (el: any) => (inputRefs.current[childProps.dataLabel || "radio"] = el)
+              // ref: (el: any) => (inputRefs.current[childProps.dataLabel || "radio"] = el)
             });
           case CustomSelect:
             return React.cloneElement(child, {

@@ -1,20 +1,35 @@
-import React, { forwardRef, useImperativeHandle, useState } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import { _primaryTextInputStyles } from '../../utils/classStrings';
-import { CustomInputType } from '../types/formInputTypes';
+import { CustomInputType, DatePickerProps } from '../types/formInputTypes';
 
-interface DatePickerProps {
-    value: string
-    onDateChange: (value: string) => void // Callback to notify parent when value of CustomDatePicker changes
-    required?: boolean
-    dataLabel?: string
-}
-
-export const CustomDatePicker = forwardRef<CustomInputType, DatePickerProps>(({ value, onDateChange, required }, ref) => {
+export const CustomDatePicker = forwardRef<CustomInputType, DatePickerProps>(({ onDateChange, required }, ref) => {
+    const [value, setValue] = useState<string>(""); // State for input value
     const [error, setError] = useState<string | null>(null); // Local error state
 
-    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onDateChange(e.target.value)
-        console.log(e.target.value) // remove later
+    // Notify parent of the current input value initially
+    useEffect(() => {
+        onDateChange(value);
+    }, []); // Run only on component mount
+
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = event.target.value
+        setValue(newValue)
+        onDateChange(newValue)
+
+        if (required && newValue === "") {
+            setError("This field is required")
+          } else {
+            setError(null)
+          }
+    }
+
+    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        const newValue = event.target.value
+        if (required && newValue === "") {
+            setError("This field is required")
+          } else {
+            setError(null)
+          }
     }
 
     useImperativeHandle(ref, () => ({
@@ -27,7 +42,7 @@ export const CustomDatePicker = forwardRef<CustomInputType, DatePickerProps>(({ 
     return (
         <div className="flex flex-col items-start m-4">
             <label htmlFor="datePicker">Select date</label>
-            <input className={_primaryTextInputStyles} id='datePicker' type='date' value={value} onChange={handleDateChange} />
+            <input onBlur={handleBlur} className={_primaryTextInputStyles} id='datePicker' type='date' value={value} onChange={handleDateChange} />
             {error && <span className="text-red-500 mt-1">{error}</span>}
         </div>
     )

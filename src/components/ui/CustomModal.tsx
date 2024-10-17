@@ -7,15 +7,15 @@ interface ModalProps {
 }
 
 export const CustomModal: React.FC<ModalProps> = ({ invoked, setInvoked }) => {
-  const modalRef = useRef<HTMLDivElement | null>(null);
-  const acceptButtonRef = useRef<HTMLButtonElement | null>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null)
+  const acceptButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const handleClickOutside = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       if (acceptButtonRef.current) {
         console.log("Clicked outside of modal");
-        if (!acceptButtonRef.current.className.includes("animate-pulse")) {
-          acceptButtonRef.current.className += ' animate-pulse';
+        if (!acceptButtonRef.current.className.includes("animate-pulse border-white duration-500")) {
+          acceptButtonRef.current.className += ' animate-pulse border-white duration-500';
         }
       }
     }
@@ -23,26 +23,26 @@ export const CustomModal: React.FC<ModalProps> = ({ invoked, setInvoked }) => {
 
   const handleCloseModal = () => {
     if (acceptButtonRef.current) {
-      const classList = acceptButtonRef.current.className.split(" ");
-      acceptButtonRef.current.className = classList.filter(cls => cls !== "animate-pulse").join(" ");
+      const classList = acceptButtonRef.current.className.split(" ")
+      acceptButtonRef.current.className = classList.filter(cls => cls !== "animate-pulse" && cls !== "border-white" && cls !== "duration-500").join(" ")
     }
     setInvoked(!invoked);
   }
 
   useEffect(() => {
     if (invoked) {
-      document.body.style.overflow = 'hidden';
-      document.addEventListener("mousedown", handleClickOutside);
+      document.body.style.overflow = 'hidden'
+      document.addEventListener("mousedown", handleClickOutside)
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = 'auto'
     }
 
     // Clean up event listener when modal is closed or component is unmounted
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.body.style.overflow = 'auto';
+      document.removeEventListener("mousedown", handleClickOutside)
+      document.body.style.overflow = 'auto'
     };
-  }, [invoked]);
+  }, [invoked])
 
   return (
     <div
@@ -66,5 +66,5 @@ export const CustomModal: React.FC<ModalProps> = ({ invoked, setInvoked }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

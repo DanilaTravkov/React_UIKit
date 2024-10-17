@@ -34,10 +34,9 @@ export const CustomDropDownMenu: React.FC<DropDownMenuProps> = ({ items, header 
                 style={{ transitionProperty: 'opacity, max-height' }}
             >
                 {items.map((item, index) => (
-                    <div className="px-2">
+                    <div key={index} className="px-2">
                         <a href={item.link}>
                             <li
-                            key={index}
                             className={`p-3 px-4 rounded-full text-start hover:bg-zinc-500/10 font-light`}
                             >
                                 {item.label}

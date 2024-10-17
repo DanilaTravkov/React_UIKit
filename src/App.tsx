@@ -31,6 +31,7 @@ export type ToastHandle = {
 
 function App()  {
   const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue2, setInputValue2] = useState<string>("");
   const [selectValue, setSelectValue] = useState<string | number>();
   const [invokedModal, setInvokedModal] = useState<boolean>(true);
   const [toggleSwitch, setToggleSwitch] = useState<boolean>(true);
@@ -91,11 +92,12 @@ function App()  {
       <CustomButton children={"Click me"} onClick={() => setInvokedModal(true)} toastAction={() => showToast("Modal opened")} type="button" primary={true} />
 
       <CustomForm toastRef={toastRef} onSubmit={handleSubmit}>
-        <CustomDatePicker required onDateChange={setSelectedDate} value={selectedDate} />
+        <CustomDatePicker required onDateChange={setSelectedDate} dataLabel='date' />
         <CustomTextInput required isValidated onInputChange={setInputValue} dataLabel="username" type="text" placeholder='Example: username1' label="Enter username" />
+        <CustomTextInput required isValidated onInputChange={setInputValue2} dataLabel="username2" type="text" placeholder='Example: username1' label="Enter username2" />
         <CustomTextInput required isValidated onInputChange={setInputValue} dataLabel="email" type="email" placeholder='Example: johndoe@gmail.com' label='Enter email' />
         <CustomTextInput required isValidated onInputChange={setInputValue} dataLabel="password" type='password' placeholder='Up to 12 symbols' label='Enter password' />
-        <CustomSelect required onSelectChange={setSelectValue} placeholder="Select size" selectOptions={selectOptions} />
+        <CustomSelect onSelectChange={setSelectValue} placeholder="Select size" selectOptions={selectOptions} />
         <CustomCheckBoxFactory onCheckBoxChange={setCheckboxData} values={checkboxData} />
         <CustomRadioButtonFactory onValueChange={setSelectedRadioValue} options={RadioOptions} />
         <CustomButton children={'Submit'} toastAction={() => showToast("Form submitted")} type="submit" primary />
